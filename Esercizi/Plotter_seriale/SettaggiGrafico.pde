@@ -1,7 +1,7 @@
 //----------------------------------------------------------------------
 //Dati
-float MAXVal = 1;
-float MINVal = 1;
+float MAXVal;
+float MINVal;
 
 float [] OldVal  = new float [1];
 float [] OldTemp = new float [1];

@@ -79,10 +79,6 @@ int Oldmillis;
 //CompilaGrafico(float i) si occupa di tracciare la linea con i valori
 void CompilaGrafico(float i) {
   
-	//Aggiorna i valore massimo e minimo trovato e di conseguenza i settaggi del grafico
-//	if(i>MAXVal){MAXVal=i;AggiornaSettaggi();}
-//	if(i<MINVal){MINVal=i;AggiornaSettaggi();}
-	
 	background(Colore_Sfo); //Ripulisci schermata
 
 	image(Logo, Dis_Y_SupX, 0); //Stampa immagine
@@ -110,8 +106,9 @@ void CompilaGrafico(float i) {
 	float totTemp =0; //Creare una variabile che contine il tempo totale per il disegno
 
 	strokeWeight(Spessore); //Imposta lo spessore delal linea
-MAXVal=1;
-MINVal =-1;
+   MAXVal = 1;
+   MINVal =-1;
+   
 	for(int f =Cont; f>1; f--) {
 		//Disegno linea
 		line( Dis_X_DesX - ((( OldTemp[f  ]                + totTemp) - OldTemp[Cont]) / ValoreTaccaX) * Dis_Tacca_X , //X2
@@ -121,9 +118,9 @@ MINVal =-1;
 		
 		//Aggiorna tempo totale
 		totTemp+= OldTemp[f];
-//Aggiorna i valore massimo e minimo trovato e di conseguenza i settaggi del grafico
-  if(OldVal [f  ]>MAXVal){MAXVal=OldVal [f  ];}
-  if(OldVal [f  ]<MINVal){MAXVal=OldVal [f  ];}
+    //Aggiorna i valore massimo e minimo trovato e di conseguenza i settaggi del grafico
+    if(OldVal [f  ]>MAXVal){MAXVal=OldVal [f  ];}
+    if(OldVal [f  ]<MINVal){MINVal=OldVal [f  ];}
 	}
 	
 	if (((totTemp/ValoreTaccaX) * Dis_Tacca_X)< width) {AllargaVettori(); Cont++;}
@@ -141,15 +138,18 @@ void AggiornaSettaggi(){
 	
 	//Aggiorna asse Y
 	//map ( Valore assoluto di MINVal, Zero, Totale valore Asse Y positivo piu negativo, Punto superiore Asse Y, Punto inferiore Asse Y)
-	Dis_X_SinY = height - 30 - int(map ( abs(MINVal)              , 0   , MAXVal+abs(MINVal)                        , Dis_Y_SupY            , Dis_Y_InfY            ));
-	Dis_X_DesX = width  - Dis_X_SinX;
+	Dis_X_SinY = height  - int(abs(map ( abs(MINVal)              , 0   , MAXVal+abs(MINVal)                        , Dis_Y_SupY+30            , Dis_Y_InfY-30          )  ));	
+  println(MINVal);
+  Dis_X_DesX = width  - Dis_X_SinX;
 	Dis_X_DesY = Dis_X_SinY;
 	
 	//Aggiorna posizione 0
 	Zero_X = Dis_Y_SupX;
 	Zero_Y = Dis_X_SinY;
 	
-	for (ValoreTaccaY = 0; (ValoreTaccaY*((Zero_Y-Dis_Y_SupY)/Dis_Tacca_Y))<MAXVal;ValoreTaccaY+=0.01){} //Calcola valore di una tacca
+	if (MAXVal >= abs(MINVal)) { for (ValoreTaccaY = 0; (ValoreTaccaY*((Zero_Y-Dis_Y_SupY)/Dis_Tacca_Y))<abs(MAXVal);ValoreTaccaY+=0.01){}  //Calcola valore di una tacca
+  } else                     { for (ValoreTaccaY = 0; (ValoreTaccaY*((Dis_Y_InfY-Zero_Y)/Dis_Tacca_Y))<abs(MINVal);ValoreTaccaY+=0.01){}} //Calcola valore di una tacca
+
 }
 
 void ScalaVal(){

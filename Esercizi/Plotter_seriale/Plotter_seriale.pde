@@ -6,7 +6,7 @@ int valore =0;
 
 void setup() {
   
-  val = new byte[1000];
+  val = new byte[10];
 	size(1080,720);  //Crea finestra
 	background(255); //Sfondo bianco
 
@@ -18,7 +18,7 @@ void setup() {
 
 void draw(){
   
-  while ( Arduino.available() > 0) { val = Arduino.readBytesUntil('\n');} 
+  while ( Arduino.available() > 0) { val = Arduino.readBytesUntil('\n');} //Attedni finchè non finisce la comunicazione
   
   valore = 0;
   
@@ -28,5 +28,5 @@ void draw(){
     }
   }
   
-  CompilaGrafico(valore); //Stampa un valore casuale
+  CompilaGrafico(50-valore); //Aggiungi il valore al grafico
 }
