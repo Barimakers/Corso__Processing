@@ -8,6 +8,6 @@ void setup() {
 }
 
 void loop() {
-Serial.println(Sens1.distanza());
-delay(100);
+  Serial.println(Sens1.distanza());
+  delay(100);
 }
